@@ -89,23 +89,38 @@ client.on('interactionCreate', async interaction => {
         const message = 'サンプルメッセージ';
 
         // GASのウェブアプリケーションURL
-        const url = 'https://script.google.com/macros/s/AKfycbwQT7RgGOBjLsjzWsOFQzzZ8vGHO49eFfatSaKyhKBjOKkS8werfYGE8lySYvI4EDMi/exec';
+        const url = 'https://script.google.com/macros/s/AKfycbyGxPxBesn4jLprEiGfCm3uG0MY6p8JFT2mfIrbQ6ctTPmCf-pFfNb4D4cbySDnSi9t8A/exec';
 
         // POSTリクエストの送信
         fetch(url, {
             "method": 'POST',
-            // "mode"       : "no-cors",
-            "Content-Type": 'application/json',
+             "mode"       : "no-cors",
+            headers: { // headers オブジェクト内に "Content-Type" を設定
+            'Content-Type': 'application/json; charset=UTF-8'},
             
             "body": JSON.stringify({ name: name, message: message }),
         })
-        .then(response => response.json()) // レスポンスのJSONを解析
-		.then(data => console.log(data)) // 成功時のデータをログ出力
-		.catch(error => console.error('Error:', error)); // エラー処理
+        .then(response => response.text())
+  .then(text => {
+    try {
+      const data = JSON.parse(text); // テキストをJSONとして解析
+      console.log('JSON形式のデータ:', data);
+      // dataを使用した処理...
+    } catch (error) {
+      console.error('テキストはJSON形式ではありません:', text);
+      // JSONでない場合の処理...
+    }
+  });
+    //     .then(response => response.text()) // レスポンスをテキストとして解析
+    //   .then(data => {
+	// 	console.log(data);
+	// })
+
 
         await interaction.reply(`あなたの名前は ${name} ですね。情報を送信しました。`);
     }
 });
+
 
 
 client.login(process.env.TOKEN);
