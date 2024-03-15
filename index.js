@@ -79,14 +79,33 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
-// モーダル送信時のイベントハンドラ
+
+
 client.on('interactionCreate', async interaction => {
     if (!interaction.isModalSubmit()) return;
 
     if (interaction.customId === 'nameModal') {
         const name = interaction.fields.getTextInputValue('nameInput');
-        await interaction.reply(`あなたの名前は ${name} ですね。入力ありがとうございます！`);
+        const message = 'サンプルメッセージ';
+
+        // GASのウェブアプリケーションURL
+        const url = 'https://script.google.com/macros/s/AKfycbwQT7RgGOBjLsjzWsOFQzzZ8vGHO49eFfatSaKyhKBjOKkS8werfYGE8lySYvI4EDMi/exec';
+
+        // POSTリクエストの送信
+        fetch(url, {
+            "method": 'POST',
+            // "mode"       : "no-cors",
+            "Content-Type": 'application/json',
+            
+            "body": JSON.stringify({ name: name, message: message }),
+        })
+        .then(response => response.json()) // レスポンスのJSONを解析
+		.then(data => console.log(data)) // 成功時のデータをログ出力
+		.catch(error => console.error('Error:', error)); // エラー処理
+
+        await interaction.reply(`あなたの名前は ${name} ですね。情報を送信しました。`);
     }
 });
+
 
 client.login(process.env.TOKEN);
