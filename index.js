@@ -41,13 +41,13 @@ client.once('ready', () => { //ここにボットが起動した際のコード�
 async function setupButton(channel) {
     const button = new ButtonBuilder()
         .setCustomId('openModal')
-        .setLabel('名前を入力')
-        .setStyle(ButtonStyle.Primary);
+        .setLabel('入会届')
+        .setStyle(ButtonStyle.Primary);//ボタンを青に
 
     const row = new ActionRowBuilder().addComponents(button);
 
     await channel.send({
-        content: '名前の入力フォームを開くには下のボタンをクリックしてください。',
+        content: '入会届のフォームを開くには下のボタンをクリックしてください。',
         components: [row]
     });
 }
@@ -64,16 +64,22 @@ client.on('interactionCreate', async interaction => {
 
     if (interaction.customId === 'openModal') {
         const modal = new ModalBuilder()
-            .setCustomId('nameModal')
-            .setTitle('名前の入力');
+            .setCustomId('admissionModal')
+            .setTitle('入会届');
 
         const nameInput = new TextInputBuilder()
             .setCustomId('nameInput')
-            .setLabel('あなたの名前を入力してください')
+            .setLabel('あなたの氏名を入力してください')
+            .setStyle(TextInputStyle.Short);
+
+        const nameInput2 = new TextInputBuilder()
+            .setCustomId('nameInput2')
+            .setLabel('ふりがなを入力してください')
             .setStyle(TextInputStyle.Short);
 
         const firstActionRow = new ActionRowBuilder().addComponents(nameInput);
-        modal.addComponents(firstActionRow);
+        const secondActionRow = new ActionRowBuilder().addComponents(nameInput2);
+        modal.addComponents(firstActionRow,secondActionRow);
 
         await interaction.showModal(modal);
     }
