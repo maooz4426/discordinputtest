@@ -90,8 +90,9 @@ client.on('interactionCreate', async interaction => {
 client.on('interactionCreate', async interaction => {
     if (!interaction.isModalSubmit()) return;
 
-    if (interaction.customId === 'nameModal') {
+    if (interaction.customId === 'admissionModal') {
         const name = interaction.fields.getTextInputValue('nameInput');
+        const name2 = interaction.fields.getTextInputValue('nameInput2');
         const message = 'サンプルメッセージ';
 
         // GASのウェブアプリケーションURL
@@ -104,7 +105,7 @@ client.on('interactionCreate', async interaction => {
             headers: { // headers オブジェクト内に "Content-Type" を設定
             'Content-Type': 'application/json; charset=UTF-8'},
             
-            "body": JSON.stringify({ name: name, message: message }),
+            "body": JSON.stringify({ name: name, name2:name2,message: message }),
         })
         .then(response => response.text())
   .then(text => {
