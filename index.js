@@ -91,6 +91,7 @@ client.on('interactionCreate', async interaction => {
     if (!interaction.isModalSubmit()) return;
 
     if (interaction.customId === 'admissionModal') {
+        const uid = interaction.user.id;
         const name = interaction.fields.getTextInputValue('nameInput');
         const name2 = interaction.fields.getTextInputValue('nameInput2');
         const message = 'サンプルメッセージ';
@@ -105,7 +106,7 @@ client.on('interactionCreate', async interaction => {
             headers: { // headers オブジェクト内に "Content-Type" を設定
             'Content-Type': 'application/json; charset=UTF-8'},
             
-            "body": JSON.stringify({ name: name, name2:name2,message: message }),
+            "body": JSON.stringify({ uid: uid, name: name, name2: name2, message: message }),
         })
         .then(response => response.text())
   .then(text => {
