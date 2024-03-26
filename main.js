@@ -3,7 +3,8 @@ const {Client, GatewayIntentBits} = require('discord.js');
 require('dotenv').config();
 
 const { setupButton } = require('./setupButton');
-const {openModal, handleModalSubmit} = require('./handleModal');
+const {openModal, modalSubmit} = require('./modalHandle');
+const giveRole = require('./roleHandle');
 
 const client = new Client({
     intents:[GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
@@ -23,7 +24,8 @@ client.on('interactionCreate', async interaction => {
     if(interaction.isButton()){
         openModal(interaction);
     }else if(interaction.isModalSubmit()){
-        handleModalSubmit(interaction);
+        modalSubmit(interaction);
+        giveRole(interaction);
     }
 });
 

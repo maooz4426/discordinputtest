@@ -23,7 +23,7 @@ function openModal(interaction){
     interaction.showModal(modal);
 }
 
-async function handleModalSubmit(interaction) {
+async function modalSubmit(interaction) {
     if (!interaction.isModalSubmit()) return;
 
     if(interaction.customId === 'admissionModal'){
@@ -38,7 +38,7 @@ async function handleModalSubmit(interaction) {
         fetch(url, {
             "method": 'POST',
              "mode"       : "no-cors",
-            headers: { // headers オブジェクト内に "Content-Type" を設定
+            headers: { 
             'Content-Type': 'application/json; charset=UTF-8'},
             
             "body": JSON.stringify({ uid: uid, name: name, name2: name2 }),
@@ -46,9 +46,9 @@ async function handleModalSubmit(interaction) {
         .then(response => response.text())
         .then(text => {
             try {
-            const data = JSON.parse(text); // テキストをJSONとして解析
+            const data = JSON.parse(text); 
             console.log('JSON形式のデータ:', data);
-            // dataを使用した処理...
+           
             } catch (error) {
             console.error('テキストはJSON形式ではありません:', text);
             }
@@ -60,4 +60,4 @@ async function handleModalSubmit(interaction) {
    
 };
   
-module.exports = {openModal, handleModalSubmit};
+module.exports = {openModal, modalSubmit};
