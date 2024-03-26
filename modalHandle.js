@@ -1,6 +1,6 @@
 const {ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder} = require('discord.js');
 
-function openModal(interaction){
+function openAdmissionModal(interaction){
     const modal = new ModalBuilder()
         .setCustomId('admissionModal')
         .setTitle('入会届');
@@ -20,6 +20,29 @@ function openModal(interaction){
     
     modal.addComponents(nameInput1ActionRow, nameInput2ActionRow);
 
+    interaction.showModal(modal);
+}
+
+function openChangeModal(interaction){
+    const modal = newModalBuilder()
+        .setCustomId('changeModal')
+        .setTitle('情報変更届');
+
+    const nameInput = TextInputBuilder()
+        .setCustomId('nameInput')
+        .setLabel('あなたの氏名を入力してください')
+        .setStyle(TextInputStyle.Short);
+
+    const nameInput2 = TextInputBuilder()
+        .setCustomId('nameInput2')
+        .setLabel('あなたのふりがなを入力してください')
+        .setStyle(TextInputBuilder.Short);
+
+    const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
+    const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
+
+    modal.addComponents(nameInput1ActionRow,nameInput2ActionRow);
+    
     interaction.showModal(modal);
 }
 
@@ -60,4 +83,4 @@ async function modalSubmit(interaction) {
    
 };
   
-module.exports = {openModal, modalSubmit};
+module.exports = {openAdmissionModal, modalSubmit};
