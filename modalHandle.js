@@ -24,19 +24,19 @@ function openAdmissionModal(interaction){
 }
 
 function openChangeModal(interaction){
-    const modal = newModalBuilder()
+    const modal = new ModalBuilder()
         .setCustomId('changeModal')
         .setTitle('情報変更届');
 
-    const nameInput = TextInputBuilder()
+    const nameInput = new TextInputBuilder()
         .setCustomId('nameInput')
         .setLabel('あなたの氏名を入力してください')
         .setStyle(TextInputStyle.Short);
 
-    const nameInput2 = TextInputBuilder()
+    const nameInput2 = new TextInputBuilder()
         .setCustomId('nameInput2')
         .setLabel('あなたのふりがなを入力してください')
-        .setStyle(TextInputBuilder.Short);
+        .setStyle(TextInputStyle.Short);
 
     const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
     const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
@@ -49,7 +49,7 @@ function openChangeModal(interaction){
 async function modalSubmit(interaction) {
     if (!interaction.isModalSubmit()) return;
 
-    if(interaction.customId === 'admissionModal'){
+    if(interaction.customId === 'admissionModal' || interaction.customId === 'changeModal'){
         const uid = interaction.user.id;
         const name = interaction.fields.getTextInputValue('nameInput');
         const name2 = interaction.fields.getTextInputValue('nameInput2');
@@ -83,4 +83,4 @@ async function modalSubmit(interaction) {
    
 };
   
-module.exports = {openAdmissionModal, modalSubmit};
+module.exports = {openAdmissionModal,openChangeModal, modalSubmit};
