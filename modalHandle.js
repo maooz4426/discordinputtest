@@ -27,7 +27,8 @@ async function openChangeModal(interaction){
 
     const uid = interaction.user.id;
 
-    const userData = fetchUserInfo(uid);
+    const data = await fetchUserInfo(uid);
+    const userData = data.userData;
     // const url = process.env.url;
     // const response = await fetch(url,{
     //     method:'GET',
@@ -119,8 +120,9 @@ async function fetchUserInfo(uid){
         },
     });
 
-    const userData = await response.json();
-    return userData;
+    const data = await response.json();
+    console.log(data);
+    return data;
 }
 
 module.exports = {openAdmissionModal,openChangeModal, modalSubmit};
