@@ -23,20 +23,38 @@ function openAdmissionModal(interaction){
     interaction.showModal(modal);
 }
 
-function openChangeModal(interaction){
+async function openChangeModal(interaction){
+
+    const uid = interaction.user.id;
+
+    const userData = fetchUserInfo(uid);
+    // const url = process.env.url;
+    // const response = await fetch(url,{
+    //     method:'GET',
+    //     body:JSON.stringify({uid:uid}),
+    //     headers:{
+    //         'Content-Type':'application/json',
+    //     },
+    // });
+
+    // const userData = await response.json();
+
     const modal = new ModalBuilder()
         .setCustomId('changeModal')
         .setTitle('情報変更届');
+        
 
     const nameInput = new TextInputBuilder()
         .setCustomId('nameInput')
         .setLabel('あなたの氏名を入力してください')
-        .setStyle(TextInputStyle.Short);
+        .setStyle(TextInputStyle.Short)
+        .setValue(userData.name);
 
     const nameInput2 = new TextInputBuilder()
         .setCustomId('nameInput2')
         .setLabel('あなたのふりがなを入力してください')
-        .setStyle(TextInputStyle.Short);
+        .setStyle(TextInputStyle.Short)
+        .setValue(userData.hiragana);
 
     const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
     const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
@@ -55,16 +73,21 @@ async function modalSubmit(interaction) {
         const name2 = interaction.fields.getTextInputValue('nameInput2');
 
         // GASのウェブアプリケーションURL
-        const url = 'https://script.google.com/macros/s/AKfycbyGxPxBesn4jLprEiGfCm3uG0MY6p8JFT2mfIrbQ6ctTPmCf-pFfNb4D4cbySDnSi9t8A/exec';
+        const url = process.env.URL;
 
         // POSTリクエストの送信
         fetch(url, {
             "method": 'POST',
-             "mode"       : "no-cors",
+             "mode" : "no-cors",
             headers: { 
             'Content-Type': 'application/json; charset=UTF-8'},
             
-            "body": JSON.stringify({ uid: uid, name: name, name2: name2 }),
+            "body": JSON.stringify({ 
+                type:'submit',
+                modalType: interaction.customId,
+                uid: uid, 
+                name: name, 
+                name2: name2 }),
         })
         .then(response => response.text())
         .then(text => {
@@ -83,4 +106,21 @@ async function modalSubmit(interaction) {
    
 };
   
+async function fetchUserInfo(uid){
+    const url = process.env.URL;
+
+    const response = await fetch(url,{
+        method:'POST',
+        body: JSON.stringify({
+            type:'get',
+            uid:uid}),
+        headers:{
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const userData = await response.json();
+    return userData;
+}
+
 module.exports = {openAdmissionModal,openChangeModal, modalSubmit};
