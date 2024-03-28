@@ -32,7 +32,7 @@ client.on('interactionCreate', async interaction => {
         }
     }else if(interaction.isModalSubmit()){
         modalSubmit(interaction);
-        giveRole(interaction);
+        // giveRole(interaction);
     }
 });
 

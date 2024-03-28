@@ -1,5 +1,7 @@
 const {ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder} = require('discord.js');
 
+const giveRole = require('./roleHandle.js');
+
 function openAdmissionModal(interaction){
     const modal = new ModalBuilder()
         .setCustomId('admissionModal')
@@ -44,7 +46,6 @@ async function openChangeModal(interaction){
         .setCustomId('changeModal')
         .setTitle('情報変更届');
         
-
     const nameInput = new TextInputBuilder()
         .setCustomId('nameInput')
         .setLabel('あなたの氏名を入力してください')
@@ -69,6 +70,7 @@ async function modalSubmit(interaction) {
     if (!interaction.isModalSubmit()) return;
 
     if(interaction.customId === 'admissionModal' || interaction.customId === 'changeModal'){
+        console.log(interaction.customId);
         const uid = interaction.user.id;
         const name = interaction.fields.getTextInputValue('nameInput');
         const name2 = interaction.fields.getTextInputValue('nameInput2');
@@ -102,6 +104,11 @@ async function modalSubmit(interaction) {
 
         
         }  );
+
+        if(interaction.customId === 'admissionModal'){
+            giveRole(interaction);
+        }
+
         await interaction.reply(`あなたの名前は ${name} ですね。情報を送信しました。`);
     }
    

@@ -9,8 +9,13 @@ async function giveRole(interaction) {
         }
 
         try {
-            await interaction.member.roles.add(role);
-            await interaction.editReply(`ロール "${role.name}" を付与しました。`);
+            if(!interaction.member.roles.cache.has(role)){
+                await interaction.member.roles.add(role);
+                await interaction.editReply(`ロール "${role.name}" を付与しました。`);
+            }else{
+                return;
+            }
+           
         } catch (error) {
             console.error('ロールの付与中にエラーが発生しました:', error);
             await interaction.editReply('ロールの付与中にエラーが発生しました。');
