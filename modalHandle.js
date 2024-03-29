@@ -7,20 +7,23 @@ function openAdmissionModal(interaction){
         .setCustomId('admissionModal')
         .setTitle('入会届');
 
-    const nameInput = new TextInputBuilder()
-        .setCustomId('nameInput')
-        .setLabel('あなたの氏名を入力してください')
-        .setStyle(TextInputStyle.Short);
-        
-    const nameInput2 = new TextInputBuilder()
-        .setCustomId('nameInput2')
-        .setLabel('あなたのふりがなを入力してください')
-        .setStyle(TextInputStyle.Short);
-
-    const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
-    const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
+    const nameInput = nameTextInput();
+    // const nameInput = new TextInputBuilder()
+    //     .setCustomId('nameInput')
+    //     .setLabel('あなたの氏名を入力してください')
+    //     .setStyle(TextInputStyle.Short);
     
-    modal.addComponents(nameInput1ActionRow, nameInput2ActionRow);
+    const hiraganaInput = hiraganaTextInput();
+    // const nameInput2 = new TextInputBuilder()
+    //     .setCustomId('nameInput2')
+    //     .setLabel('あなたのふりがなを入力してください')
+    //     .setStyle(TextInputStyle.Short);
+
+    createRow(modal,nameInput,hiraganaInput);
+    // const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
+    // const nameInput2ActionRow = new ActionRowBuilder().addComponents(hiraganaInput);
+    
+    // modal.addComponents(nameInput1ActionRow, nameInput2ActionRow);
 
     interaction.showModal(modal);
 }
@@ -66,6 +69,54 @@ async function openChangeModal(interaction){
     interaction.showModal(modal);
 }
 
+async function openObogModal(){
+    const modal = new ModalBuilder()
+        .setCustomId('obogModal')
+        .setTitle('OBOG登録');
+    
+        const nameInput = new TextInputBuilder()
+        .setCustomId('nameInput')
+        .setLabel('あなたの氏名を入力してください')
+        .setStyle(TextInputStyle.Short);
+   
+
+    const nameInput2 = new TextInputBuilder()
+        .setCustomId('nameInput2')
+        .setLabel('あなたのふりがなを入力してください')
+        .setStyle(TextInputStyle.Short);
+       
+
+    const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
+    const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
+
+    modal.addComponents(nameInput1ActionRow,nameInput2ActionRow);
+    
+    interaction.showModal(modal);
+}
+
+
+function createTextInput(customId,label,style = TextInputStyle.Short,value = ''){
+    return new TextInputBuilder()
+        .setCustomId(customId)
+        .setLabel(label)
+        .setStyle(style)
+        .setValue(value);
+}
+
+function nameTextInput(){
+    return createTextInput('nameInput','あなたの氏名を入力してください');
+}
+
+function hiraganaTextInput(){
+    return createTextInput('hiraganaInput','あなたのふりがなを入力してください');
+}
+
+function createRow(modal,nameInput,hiraganaInput){
+    const nameInputActionRow = new ActionRowBuilder().addComponents(nameInput);
+    const hiraganaActionRow = new ActionRowBuilder().addComponents(hiraganaInput);
+
+    modal.addComponents(nameInputActionRow,hiraganaActionRow);
+}
 async function modalSubmit(interaction) {
     if (!interaction.isModalSubmit()) return;
 
