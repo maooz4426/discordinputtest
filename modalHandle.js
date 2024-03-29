@@ -103,20 +103,25 @@ function createTextInput(customId,label,style = TextInputStyle.Short,value = '')
         .setValue(value);
 }
 
+//氏名の入力
 function nameTextInput(){
     return createTextInput('nameInput','あなたの氏名を入力してください');
 }
 
+//ふりがな入力
 function hiraganaTextInput(){
     return createTextInput('hiraganaInput','あなたのふりがなを入力してください');
 }
 
+//入力列の作成
 function createRow(modal,nameInput,hiraganaInput){
     const nameInputActionRow = new ActionRowBuilder().addComponents(nameInput);
     const hiraganaActionRow = new ActionRowBuilder().addComponents(hiraganaInput);
 
     modal.addComponents(nameInputActionRow,hiraganaActionRow);
 }
+
+//モーダルの入力情報を提出
 async function modalSubmit(interaction) {
     if (!interaction.isModalSubmit()) return;
 
