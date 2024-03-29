@@ -49,47 +49,51 @@ async function openChangeModal(interaction){
         .setCustomId('changeModal')
         .setTitle('情報変更届');
         
-    const nameInput = new TextInputBuilder()
-        .setCustomId('nameInput')
-        .setLabel('あなたの氏名を入力してください')
-        .setStyle(TextInputStyle.Short)
-        .setValue(userData.name);
+    const nameInput = nameTextInput().setValue(userData.name);
+    // const nameInput = new TextInputBuilder()
+    //     .setCustomId('nameInput')
+    //     .setLabel('あなたの氏名を入力してください')
+    //     .setStyle(TextInputStyle.Short)
+    //     .setValue(userData.name);
 
-    const nameInput2 = new TextInputBuilder()
-        .setCustomId('nameInput2')
-        .setLabel('あなたのふりがなを入力してください')
-        .setStyle(TextInputStyle.Short)
-        .setValue(userData.hiragana);
+    const hiraganaInput = hiraganaTextInput().setValue(userData.hiragana);
+    // const nameInput2 = new TextInputBuilder()
+    //     .setCustomId('nameInput2')
+    //     .setLabel('あなたのふりがなを入力してください')
+    //     .setStyle(TextInputStyle.Short)
+    //     .setValue(userData.hiragana);
 
-    const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
-    const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
+    createRow(modal,nameInput,hiraganaInput);
+    // const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
+    // const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
 
-    modal.addComponents(nameInput1ActionRow,nameInput2ActionRow);
+    // modal.addComponents(nameInput1ActionRow,nameInput2ActionRow);
     
     interaction.showModal(modal);
 }
 
-async function openObogModal(){
+async function openObogModal(interaction){
     const modal = new ModalBuilder()
         .setCustomId('obogModal')
         .setTitle('OBOG登録');
     
-        const nameInput = new TextInputBuilder()
-        .setCustomId('nameInput')
-        .setLabel('あなたの氏名を入力してください')
-        .setStyle(TextInputStyle.Short);
+    const nameInput = nameTextInput();
+    // const nameInput = new TextInputBuilder()
+    // .setCustomId('nameInput')
+    // .setLabel('あなたの氏名を入力してください')
+    // .setStyle(TextInputStyle.Short);
    
-
-    const nameInput2 = new TextInputBuilder()
-        .setCustomId('nameInput2')
-        .setLabel('あなたのふりがなを入力してください')
-        .setStyle(TextInputStyle.Short);
+    const hiraganaInput = hiraganaTextInput();
+    // const nameInput2 = new TextInputBuilder()
+    //     .setCustomId('nameInput2')
+    //     .setLabel('あなたのふりがなを入力してください')
+    //     .setStyle(TextInputStyle.Short);
        
+    createRow(modal,nameInput,hiraganaInput);
+    // const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
+    // const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
 
-    const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
-    const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
-
-    modal.addComponents(nameInput1ActionRow,nameInput2ActionRow);
+    // modal.addComponents(nameInput1ActionRow,nameInput2ActionRow);
     
     interaction.showModal(modal);
 }
@@ -125,11 +129,14 @@ function createRow(modal,nameInput,hiraganaInput){
 async function modalSubmit(interaction) {
     if (!interaction.isModalSubmit()) return;
 
-    if(interaction.customId === 'admissionModal' || interaction.customId === 'changeModal'){
+    
         console.log(interaction.customId);
         const uid = interaction.user.id;
         const name = interaction.fields.getTextInputValue('nameInput');
-        const name2 = interaction.fields.getTextInputValue('nameInput2');
+        const hiragana = interaction.fields.getTextInputValue('hiraganaInput');
+
+        const currentTime = new Date().toString();
+        // const currentTime = new Date().toISOString();
 
         // GASのウェブアプリケーションURL
         const url = process.env.URL;
@@ -145,8 +152,9 @@ async function modalSubmit(interaction) {
                 type:'submit',
                 modalType: interaction.customId,
                 uid: uid, 
+                currentTime:currentTime,
                 name: name, 
-                name2: name2 }),
+                hiragana: hiragana }),
         })
         .then(response => response.text())
         .then(text => {
@@ -161,12 +169,12 @@ async function modalSubmit(interaction) {
         
         }  );
 
-        if(interaction.customId === 'admissionModal'){
+        if(interaction.customId === 'admissionModal'||interaction.customId === 'obogModal'){
             giveRole(interaction);
         }
 
         await interaction.reply(`あなたの名前は ${name} ですね。情報を送信しました。`);
-    }
+    
    
 };
   
@@ -188,4 +196,4 @@ async function fetchUserInfo(uid){
     return data;
 }
 
-module.exports = {openAdmissionModal,openChangeModal, modalSubmit};
+module.exports = {openAdmissionModal,openChangeModal,openObogModal, modalSubmit};

@@ -2,7 +2,12 @@ async function giveRole(interaction) {
     if (!interaction) {
         return;
     } else {
-        const role = interaction.guild.roles.cache.find(role => role.name === 'testメンバー');
+        if(interaction.customId === 'admissionModal'){
+            var role = interaction.guild.roles.cache.find(role => role.name === 'サークル会員');
+        }else if(interaction.customId === 'obogModal'){
+            var role = interaction.guild.roles.cache.find(role =>role.name === 'OBOG');
+        }
+
         if (!role) {
             await interaction.editReply('指定されたロールが見つかりませんでした。');
             return;
