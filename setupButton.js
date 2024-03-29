@@ -12,7 +12,11 @@ async function setupButton(channel){
         .setLabel('情報変更届')
         .setStyle(ButtonStyle.Success);
     
-    const row = new ActionRowBuilder().addComponents(admissionButton,changeButton);
+    const obogButton = new ButtonBuilder()
+        .setCustomId('openObogModal')
+        .setLabel('卒業済みの方')
+        .setStyle(ButtonStyle.Secondary);
+    const row = new ActionRowBuilder().addComponents(admissionButton,changeButton,obogButton);
 
     await channel.send({
         content: '入会届のフォームを開くには下のボタンをクリックしてください。',
