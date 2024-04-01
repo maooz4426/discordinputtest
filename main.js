@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const { setupButton } = require('./setupButton');
 const {openAdmissionModal,openChangeModal,openObogModal, modalSubmit} = require('./modalHandle');
-const giveRole = require('./roleHandle');
+// const giveRole = require('./roleHandle');
 
 const client = new Client({
     intents:[GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]

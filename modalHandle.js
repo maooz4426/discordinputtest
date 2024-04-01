@@ -1,6 +1,6 @@
 const {ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder} = require('discord.js');
 
-const giveRole = require('./roleHandle.js');
+const {giveRole,checkRole} = require('./roleHandle.js');
 
 function openAdmissionModal(interaction){
     const modal = new ModalBuilder()
@@ -32,7 +32,10 @@ async function openChangeModal(interaction){
 
     const uid = interaction.user.id;
 
-    const data = await fetchUserInfo(uid);
+    var role = checkRole(interaction);
+
+    console.log(role);
+    const data = await fetchUserInfo(role,uid);
     const userData = data.userData;
     // const url = process.env.url;
     // const response = await fetch(url,{
@@ -178,13 +181,15 @@ async function modalSubmit(interaction) {
    
 };
   
-async function fetchUserInfo(uid){
+//gasからユーザーの情報を取得
+async function fetchUserInfo(role,uid){
     const url = process.env.URL;
 
     const response = await fetch(url,{
         method:'POST',
         body: JSON.stringify({
-            type:'get',
+            type: 'get',
+            role: role,
             uid:uid}),
         headers:{
             'Content-Type': 'application/json',

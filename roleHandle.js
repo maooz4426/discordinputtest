@@ -28,5 +28,16 @@ async function giveRole(interaction) {
     }
 }
 
+function checkRole(interaction){
 
-module.exports = giveRole;
+    if(!interaction) return;
+    console.log(interaction.member.roles.cache.has(role));
+    if(interaction.member.roles.cache.has('サークル会員')){
+
+        return 'サークル会員';
+    }else if(interaction.member.roles.cache.has('OBOG')){
+        
+        return 'OBOG';
+    }
+}
+module.exports = {giveRole,checkRole};
