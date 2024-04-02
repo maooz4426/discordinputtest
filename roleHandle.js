@@ -38,8 +38,8 @@ async function giveRole(interaction) {
 function checkRole(interaction){
 
     if(!interaction) return;
-    console.log(interaction.member.roles.cache.has(process.env.CIRCLE_MEMBER_ROLE_ID));
-    if(interaction.member.roles.cache.has('サークル会員')){
+    // console.log();
+    if(interaction.member.roles.cache.has(process.env.CIRCLE_MEMBER_ROLE_ID)){
 
         return 'サークル会員';
     }else if(interaction.member.roles.cache.has(process.env.OBOG_ROLE_ID)){
