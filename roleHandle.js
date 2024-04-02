@@ -25,7 +25,7 @@ async function giveRole(interaction) {
              if(!interaction.member.roles.cache.has(role)){
                 await interaction.member.roles.add(role);
                 console.log('ロールを付与しました。');
-                interaction.editReply(`ロール "${role.name}" を付与しました。`);
+                // interaction.editReply(`ロール "${role.name}" を付与しました。`);
              }
            
          } catch (error) {

@@ -18,7 +18,7 @@ async function setupButton(channel){
         .setStyle(ButtonStyle.Secondary);
 
     const deleteButton = new ButtonBuilder()
-        .setCustomId('deleteModal')
+        .setCustomId('deleteConfigure')
         .setLabel('退会届')
         .setStyle(ButtonStyle.Danger);
 
