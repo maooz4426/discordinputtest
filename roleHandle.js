@@ -35,6 +35,29 @@ async function giveRole(interaction) {
     }
     }
 
+async function deleteRole(interaction){
+    if(!interaction) return;
+
+    // if (!interaction.member) {
+    //     console.error('interaction.member が undefined です。');
+    //     return;
+    //   }
+
+    // if(interaction.guild.roles.cache.find(role => role.name === 'サークル会員')){
+    //     console.log('サークル会員');
+    //     await interaction.memeber.roles.remove('サークル会員');
+    // }else if(interaction.guild.roles.cache.find(role => role.name === 'OBOG')){
+    //     await interaction.member.roles.remove('OBOG');
+    // }
+    
+    if(interaction.member.roles.cache.has(process.env.CIRCLE_MEMBER_ROLE_ID)){
+        await interaction.member.roles.remove(process.env.CIRCLE_MEMBER_ROLE_ID);
+        console.log('サークル会員のロールを削除しました。');
+    }else if(interaction.member.roles.cache.has(process.env.OBOG_ROLE_ID)){
+        await interaction.member.roles.remove(process.env.OBOG_ROLE_ID);
+        console.log('OBOGのロールを削除しました。');
+    }
+}
 function checkRole(interaction){
 
     if(!interaction) return;
@@ -47,4 +70,4 @@ function checkRole(interaction){
         return 'OBOG';
     }
 }
-module.exports = {giveRole,checkRole};
+module.exports = {giveRole,checkRole,deleteRole};

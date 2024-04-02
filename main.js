@@ -5,7 +5,7 @@ require('dotenv').config();
 const { setupButton} = require('./setupButton');
 const {openAdmissionModal,openChangeModal,openObogModal, modalSubmit} = require('./modalHandle');
 const {deleteConfigureButton,fetchDeleteUserInfo} = require('./messageHandle');
-const { checkRole } = require('./roleHandle');
+const { checkRole,deleteRole } = require('./roleHandle');
 //  onst {checkRole} = require('./roleHandle');
 
 const client = new Client({
@@ -41,14 +41,21 @@ client.on('interactionCreate', async interaction => {
                 deleteConfigureButton(interaction);
                 break;
             case 'confirmDeleteYes': 
-                console.log('ユーザーが退会を確認');
+            try {
+                
                 const role = checkRole(interaction); // ロールをチェック
                 const uid = interaction.user.id; // ユーザーIDを取得
                 await fetchDeleteUserInfo(role, uid); // 退会情報のフェッチ
+                await deleteRole(interaction);
                 console.log('退会処理が完了しました。');
-                await interaction.deferReply({ ephemeral: true }).catch(console.error);
+                await interaction.deferReply({ ephemeral: true }); // 応答を保留に設定
                 await interaction.followUp({ content: '退会処理が完了しました。', ephemeral: true }); // 確認メッセージを送信
-                break;
+              } catch (error) {
+                console.error('処理中にエラーが発生しました:', error);
+                await interaction.deferReply({ ephemeral: true });
+                await interaction.followUp({ content: 'エラーが発生しました。', ephemeral: true });
+              }
+            break;
             // case'confirmDeleteYes':
             //     console.log('confirmDeleteYes');
             //     fetchDeleteUserInfo(interaction);
