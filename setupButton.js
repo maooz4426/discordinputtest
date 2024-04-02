@@ -16,10 +16,16 @@ async function setupButton(channel){
         .setCustomId('openObogModal')
         .setLabel('卒業済みの方')
         .setStyle(ButtonStyle.Secondary);
-    const row = new ActionRowBuilder().addComponents(admissionButton,changeButton,obogButton);
+
+    const deleteButton = new ButtonBuilder()
+        .setCustomId('deleteModal')
+        .setLabel('退会届')
+        .setStyle(ButtonStyle.Danger);
+
+    const row = new ActionRowBuilder().addComponents(admissionButton,changeButton,obogButton,deleteButton);
 
     await channel.send({
-        content: '入会届のフォームを開くには下のボタンをクリックしてください。',
+        content: '入会、退会、卒業、登録情報を変更したい場合は下のボタンをクリックしてください。',
         components: [row]
     });
     }

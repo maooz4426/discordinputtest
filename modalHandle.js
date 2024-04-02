@@ -3,9 +3,11 @@ const {ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder} = requi
 const {giveRole,checkRole} = require('./roleHandle.js');
 
 function openAdmissionModal(interaction){
+    // console.log('openAdmissionModal 開始');
     const modal = new ModalBuilder()
         .setCustomId('admissionModal')
         .setTitle('入会届');
+    // console.log('モーダル作成完了');
 
     const nameInput = nameTextInput();
     // const nameInput = new TextInputBuilder()
@@ -30,7 +32,7 @@ function openAdmissionModal(interaction){
 
 async function openChangeModal(interaction){
 
-    const uid = interaction.user.id;
+    var uid = interaction.user.id;
 
     var role = checkRole(interaction);
 
@@ -101,6 +103,22 @@ async function openObogModal(interaction){
     interaction.showModal(modal);
 }
 
+// async function openDeleteModal(interaction){
+
+//     const modal = new ModalBuilder()
+//         .setCustomId('deleteModal')
+//         .setTitle('退会届');
+
+//     var uid = interaction.user.id;
+
+//     var role = checkRole(interaction);
+
+//     var data = await fetchUserInfo(role,uid);
+
+//     var name = data.userData.name;
+
+    
+// }
 
 function createTextInput(customId,label,style = TextInputStyle.Short,value = ''){
     return new TextInputBuilder()
@@ -133,7 +151,7 @@ async function modalSubmit(interaction) {
 
     if (!interaction.isModalSubmit()) return;
 
-        var role = checkRole(interaction);
+        const role = checkRole(interaction);
         console.log(interaction.customId);
         const uid = interaction.user.id;
         const name = interaction.fields.getTextInputValue('nameInput');

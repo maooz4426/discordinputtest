@@ -2,6 +2,7 @@ async function giveRole(interaction) {
     if (!interaction) {
         return;
     } else {
+        console.log('ロールを確認します。');
         if(interaction.customId === 'admissionModal'){
             var role = interaction.guild.roles.cache.find(role => role.name === 'サークル会員');
         }else if(interaction.customId === 'obogModal'){
@@ -13,21 +14,26 @@ async function giveRole(interaction) {
             return;
         }
 
-        try {
+        //  await interaction.deferReply();
+        console.log('ロールを付与します。');
+        // if(!interaction.member.roles.cache.has(role)){
+        //     await interaction.member.roles.add(role);
+        //     interaction.editReply(`ロール "${role.name}" を付与しました。`);
+        // }
+         try {
 
-            if(!interaction.member.roles.cache.has(role)){
+             if(!interaction.member.roles.cache.has(role)){
                 await interaction.member.roles.add(role);
-                await interaction.editReply(`ロール "${role.name}" を付与しました。`);
-            }else{
-                return;
-            }
+                console.log('ロールを付与しました。');
+                interaction.editReply(`ロール "${role.name}" を付与しました。`);
+             }
            
-        } catch (error) {
-            console.error('ロールの付与中にエラーが発生しました:', error);
-            await interaction.editReply('ロールの付与中にエラーが発生しました。');
-        }
+         } catch (error) {
+             console.error('ロールの付与中にエラーが発生しました:', error);
+             await interaction.followUp('ロールの付与中にエラーが発生しました。');
+         }
     }
-}
+    }
 
 function checkRole(interaction){
 

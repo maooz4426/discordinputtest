@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const { setupButton } = require('./setupButton');
 const {openAdmissionModal,openChangeModal,openObogModal, modalSubmit} = require('./modalHandle');
+const deleteConfigureButton = require('./messageHandle');
 // const giveRole = require('./roleHandle');
 
 const client = new Client({
@@ -31,6 +32,9 @@ client.on('interactionCreate', async interaction => {
                 break;
             case 'openObogModal':
                 openObogModal(interaction);
+                break;
+            case'deleteConfigure':
+                deleteConfigureButton(interaction);
                 break;
         }
     }else if(interaction.isModalSubmit()){
