@@ -130,13 +130,15 @@ function createRow(modal,nameInput,hiraganaInput){
 
 //モーダルの入力情報を提出
 async function modalSubmit(interaction) {
+
     if (!interaction.isModalSubmit()) return;
 
-    
+        var role = checkRole(interaction);
         console.log(interaction.customId);
         const uid = interaction.user.id;
         const name = interaction.fields.getTextInputValue('nameInput');
         const hiragana = interaction.fields.getTextInputValue('hiraganaInput');
+        
 
         const currentTime = new Date().toString();
         // const currentTime = new Date().toISOString();
@@ -154,6 +156,7 @@ async function modalSubmit(interaction) {
             "body": JSON.stringify({ 
                 type:'submit',
                 modalType: interaction.customId,
+                role: role,
                 uid: uid, 
                 currentTime:currentTime,
                 name: name, 

@@ -14,6 +14,7 @@ async function giveRole(interaction) {
         }
 
         try {
+
             if(!interaction.member.roles.cache.has(role)){
                 await interaction.member.roles.add(role);
                 await interaction.editReply(`ロール "${role.name}" を付与しました。`);
@@ -31,11 +32,11 @@ async function giveRole(interaction) {
 function checkRole(interaction){
 
     if(!interaction) return;
-    console.log(interaction.member.roles.cache.has(role));
+    console.log(interaction.member.roles.cache.has(process.env.CIRCLE_MEMBER_ROLE_ID));
     if(interaction.member.roles.cache.has('サークル会員')){
 
         return 'サークル会員';
-    }else if(interaction.member.roles.cache.has('OBOG')){
+    }else if(interaction.member.roles.cache.has(process.env.OBOG_ROLE_ID)){
         
         return 'OBOG';
     }
