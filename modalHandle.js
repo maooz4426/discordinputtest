@@ -39,7 +39,7 @@ async function openChangeModal(interaction){
     console.log(role);
     const data = await fetchUserInfo(role,uid);
     // await interaction.response.defer();
-    // await new Promise(resolve => setTimeout(resolve, 10000000));
+   
     // await interaction.deferReply({ ephemeral: true }); // 応答を保留に設定
     const userData = data.userData;
     // const url = process.env.url;
@@ -72,13 +72,16 @@ async function openChangeModal(interaction){
     //     .setValue(userData.hiragana);
     console.log(2);
     createRow(modal,nameInput,hiraganaInput);
-    console.log(3)
+    console.log(3);
     // const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
     // const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
 
     // modal.addComponents(nameInput1ActionRow,nameInput2ActionRow);
     
+    // console.log(4);
+    // await new Promise(resolve => setTimeout(resolve, 5000)); 
     interaction.showModal(modal);
+    // await interaction.deferReply({ ephemeral: true });
 }
 
 async function openObogModal(interaction){
@@ -103,8 +106,15 @@ async function openObogModal(interaction){
     // const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
 
     // modal.addComponents(nameInput1ActionRow,nameInput2ActionRow);
-    
-    interaction.showModal(modal);
+    // try{
+    //     interaction.showModal(modal);
+    // }catch(error){
+    //     await interaction.deferReply({ ephemeral: true });
+    //     interaction.showModal(modal);
+    // }
+
+    interaction.showModal(modal);  
+       
 }
 
 // async function openDeleteModal(interaction){
