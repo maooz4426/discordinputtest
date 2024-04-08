@@ -41,7 +41,7 @@ client.on('interactionCreate', async interaction => {
                 deleteConfigureButton(interaction);
                 break;
             case 'confirmDeleteYes': 
-            try {
+           // try {
                 
                 const role = checkRole(interaction); // ロールをチェック
                 const uid = interaction.user.id; // ユーザーIDを取得
@@ -49,12 +49,12 @@ client.on('interactionCreate', async interaction => {
                 await deleteRole(interaction);
                 console.log('退会処理が完了しました。');
                 await interaction.deferReply({ ephemeral: true }); // 応答を保留に設定
-                await interaction.followUp({ content: '退会処理が完了しました。', ephemeral: true }); // 確認メッセージを送信
-              } catch (error) {
-                console.error('処理中にエラーが発生しました:', error);
-                await interaction.deferReply({ ephemeral: true });
-                await interaction.followUp({ content: 'エラーが発生しました。', ephemeral: true });
-              }
+                interaction.followUp({ content: '退会処理が完了しました。', ephemeral: true }); // 確認メッセージを送信
+            //   } catch (error) {
+            //     console.error('処理中にエラーが発生しました:', error);
+            //     await interaction.deferReply({ ephemeral: true });
+            //     await interaction.followUp({ content: 'エラーが発生しました。', ephemeral: true });
+            //   }
             break;
             // case'confirmDeleteYes':
             //     console.log('confirmDeleteYes');
