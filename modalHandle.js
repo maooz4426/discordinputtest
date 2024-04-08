@@ -38,6 +38,9 @@ async function openChangeModal(interaction){
 
     console.log(role);
     const data = await fetchUserInfo(role,uid);
+    // await interaction.response.defer();
+    // await new Promise(resolve => setTimeout(resolve, 10000000));
+    // await interaction.deferReply({ ephemeral: true }); // 応答を保留に設定
     const userData = data.userData;
     // const url = process.env.url;
     // const response = await fetch(url,{
@@ -60,15 +63,16 @@ async function openChangeModal(interaction){
     //     .setLabel('あなたの氏名を入力してください')
     //     .setStyle(TextInputStyle.Short)
     //     .setValue(userData.name);
-
+    console.log(1);
     const hiraganaInput = hiraganaTextInput().setValue(userData.hiragana);
     // const nameInput2 = new TextInputBuilder()
     //     .setCustomId('nameInput2')
     //     .setLabel('あなたのふりがなを入力してください')
     //     .setStyle(TextInputStyle.Short)
     //     .setValue(userData.hiragana);
-
+    console.log(2);
     createRow(modal,nameInput,hiraganaInput);
+    console.log(3)
     // const nameInput1ActionRow = new ActionRowBuilder().addComponents(nameInput);
     // const nameInput2ActionRow = new ActionRowBuilder().addComponents(nameInput2);
 
