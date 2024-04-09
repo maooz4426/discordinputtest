@@ -36,15 +36,7 @@ async function deleteConfigureButton(interaction){
         });
 
         console.log(interaction.customId);
-        // if (interaction.customId === 'confirmDeleteYes') {
-        //     // 退会処理を実行
-        //     console.log('退会処理を実行します。');
-        //     fetchDeleteUserInfo(role,uid);
-        //     await interaction.update({ content: `${userName}さんの退会処理を完了しました。`, components: [] });
-        // } else if (interaction.customId === 'confirmDeleteNo') {
-        //     // 退会処理をキャンセル
-        //     await interaction.update({ content: '退会処理をキャンセルしました。', components: [] });
-        // }
+
 }
 
 //gasからユーザーの情報を取得
@@ -87,9 +79,6 @@ async function fetchDeleteUserInfo(role, uid) {
             throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
         }
 
-        // const data = await response.json(); // レスポンスボディをJSONとして解析
-        //console.log(data); // 解析したデータをログに出力
-        //return data; // 解析したデータを返す
         return;
     } catch (error) {
         console.error('Error fetching user info:', error); // エラーをキャッチし、ログに出力

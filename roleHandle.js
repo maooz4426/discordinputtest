@@ -16,18 +16,13 @@ async function giveRole(interaction) {
             return;
         }
 
-        //  await interaction.deferReply();
         console.log('ロールを付与します。');
-        // if(!interaction.member.roles.cache.has(role)){
-        //     await interaction.member.roles.add(role);
-        //     interaction.editReply(`ロール "${role.name}" を付与しました。`);
-        // }
+
          try {
 
              if(!interaction.member.roles.cache.has(role)){
                 await interaction.member.roles.add(role);
                 console.log('ロールを付与しました。');
-                // interaction.editReply(`ロール "${role.name}" を付与しました。`);
              }
            
          } catch (error) {
@@ -39,18 +34,6 @@ async function giveRole(interaction) {
 
 async function deleteRole(interaction){
     if(!interaction) return;
-
-    // if (!interaction.member) {
-    //     console.error('interaction.member が undefined です。');
-    //     return;
-    //   }
-
-    // if(interaction.guild.roles.cache.find(role => role.name === 'サークル会員')){
-    //     console.log('サークル会員');
-    //     await interaction.memeber.roles.remove('サークル会員');
-    // }else if(interaction.guild.roles.cache.find(role => role.name === 'OBOG')){
-    //     await interaction.member.roles.remove('OBOG');
-    // }
     
     if(interaction.member.roles.cache.has(process.env.CIRCLE_MEMBER_ROLE_ID)){
         await interaction.member.roles.remove(process.env.CIRCLE_MEMBER_ROLE_ID);
@@ -64,7 +47,7 @@ async function deleteRole(interaction){
 function checkRole(interaction){
 
     if(!interaction) return;
-    // console.log();
+
     if(interaction.member.roles.cache.has(process.env.CIRCLE_MEMBER_ROLE_ID)){
         return 'サークル会員';
     }else if(interaction.member.roles.cache.has(process.env.OBOG_ROLE_ID)){
